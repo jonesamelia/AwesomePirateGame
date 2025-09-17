@@ -25,4 +25,10 @@ func update_sprite():
 
 
 func _on_color_button_pressed() -> void:
-	pass # Replace with function body.
+	current_color_index = (current_color_index + 1) % Global.body_color_options.size()
+	update_sprite()
+
+
+func _on_color_button_down_pressed() -> void:
+	current_color_index = (current_color_index - 1) % Global.body_color_options.size()
+	update_sprite()

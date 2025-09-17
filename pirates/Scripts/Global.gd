@@ -1,22 +1,22 @@
 extends Node
 
 var bodies_collection = {
-	"01" :preload("res://Assets/Sprites/characterbody.png")
+	"01" :preload("res://Assets/Sprites/player/betterbody.png")
 }
 
 var hair_collection = {
 	"none" : null,
-	"01" : preload("res://Assets/Sprites/mediumredhair.png"),
+	"01" : preload("res://Assets/Sprites/player/betterhair.png"),
 }
 
 var tops_collection = {
-	"01" : preload("res://Assets/Sprites/whiteshirt.png")
+	"01" : preload("res://Assets/Sprites/player/bettershirt.png")
 }
 var bottoms_collection = {
-	"01" : preload("res://Assets/Sprites/brownpants.png")
+	"01" : preload("res://Assets/Sprites/player/betterpants.png")
 }
 var shoes_collection = {
-	"01" : preload("res://Assets/Sprites/boots.png")
+	"01" : preload("res://Assets/Sprites/player/betterboots.png")
 }
 
 var body_color_options = [

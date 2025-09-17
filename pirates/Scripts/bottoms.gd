@@ -22,3 +22,23 @@ func update_sprite():
 	
 	Global.selected_bottoms = current_sprite
 	Global.selected_bottoms_color = Global.color_options[current_color_index]
+
+
+func _on_style_button_pressed() -> void:
+	current_bottoms_index = (current_bottoms_index + 1) % bottoms_keys.size()
+	update_sprite()
+
+
+func _on_style_button_down_pressed() -> void:
+	current_bottoms_index = (current_bottoms_index - 1) % bottoms_keys.size()
+	update_sprite()
+
+
+func _on_color_button_pressed() -> void:
+	current_color_index = (current_color_index + 1) % Global.color_options.size()
+	update_sprite()
+
+
+func _on_color_button_down_pressed() -> void:
+	current_color_index = (current_color_index - 1) % Global.color_options.size()
+	update_sprite()
