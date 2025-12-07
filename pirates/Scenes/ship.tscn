@@ -1,0 +1,150 @@
+[gd_scene load_steps=11 format=3 uid="uid://crsyfvi7fehx7"]
+
+[ext_resource type="Script" uid="uid://dhyste5lgcj4m" path="res://Scenes/ship.gd" id="1_kxdp2"]
+[ext_resource type="Texture2D" uid="uid://bunpjrv86tjmq" path="res://Assets/Ase/smallship.png" id="2_v2j2m"]
+[ext_resource type="Script" uid="uid://ysire1scc8b2" path="res://Scenes/anchor.gd" id="4_ssryt"]
+[ext_resource type="Texture2D" uid="uid://n62pseureis4" path="res://Assets/Sprites/SHip/hanchor.png" id="5_sk2ms"]
+[ext_resource type="Script" uid="uid://dtadqwvwhwojm" path="res://Scenes/helm.gd" id="6_odhhf"]
+[ext_resource type="Texture2D" uid="uid://dwles7412hju4" path="res://Assets/Sprites/SHip/helm.png" id="7_xn00d"]
+[ext_resource type="Script" uid="uid://c5ekht05oqxjb" path="res://Scenes/stairs.gd" id="8_jrg3c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6rk3b"]
+size = Vector2(20, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_np20j"]
+size = Vector2(16, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cjl2f"]
+size = Vector2(18.6075, 20)
+
+[node name="Ship" type="AnimatableBody2D"]
+visibility_layer = 3
+collision_layer = 2
+sync_to_physics = false
+script = ExtResource("1_kxdp2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 2)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_v2j2m")
+
+[node name="Outerwalls" type="CollisionPolygon2D" parent="."]
+position = Vector2(43, 4)
+scale = Vector2(1, 1.16)
+build_mode = 1
+polygon = PackedVector2Array(0, -25, -10, -49.138, -38, -71.5519, -40, -72.4139, -42, -71.5519, -41, -62.9312, -40, -59.4829, -42, -57.7587, -44, -59.4829, -43, -62.9312, -42, -71.5519, -44, -72.4139, -46, -71.5519, -61, -59.4829, -73, -49.138, -84, -25, -84, 42.2415, -83, 44.8277, -82, 52.5863, -79, 66.3795, -75, 79.3105, -70, 89.6554, -68, 92.2416, -17, 92.2416, -15, 89.6554, -9, 77.5864, -2, 52.5863, -1, 43.9656, 0, 42.2415)
+one_way_collision_margin = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, 43)
+polygon = PackedVector2Array(16, 0, 16, -11, 17, -11, 17, -1, 16, 1, -14, 1, -14, 0, -15, -1, -15, -11, -14, -11, -14, 0)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(7, -7, 7, -1, 4, 2, -2, 2, -5, -1, -5, -7, -1, -10, 3, -10)
+
+[node name="Anchor" type="StaticBody2D" parent="."]
+show_behind_parent = true
+visibility_layer = 3
+position = Vector2(39, -50)
+scale = Vector2(1, 0.926)
+collision_layer = 4
+input_pickable = true
+script = ExtResource("4_ssryt")
+
+[node name="AnchorSprite" type="Sprite2D" parent="Anchor"]
+texture = ExtResource("5_sk2ms")
+
+[node name="InteractZone" type="Area2D" parent="Anchor"]
+position = Vector2(-8, 0)
+scale = Vector2(1.68, 1)
+collision_layer = 6
+collision_mask = 6
+
+[node name="PlayerDetector" type="CollisionShape2D" parent="Anchor/InteractZone"]
+scale = Vector2(1.35448, -1.9524)
+shape = SubResource("RectangleShape2D_6rk3b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Anchor"]
+shape = SubResource("RectangleShape2D_6rk3b")
+
+[node name="Helm" type="StaticBody2D" parent="."]
+z_index = 1
+position = Vector2(1, 48)
+collision_layer = 4
+collision_mask = 4
+input_pickable = true
+script = ExtResource("6_odhhf")
+
+[node name="Sprite2D" type="Sprite2D" parent="Helm"]
+position = Vector2(0, -8)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("7_xn00d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Helm"]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_np20j")
+
+[node name="InteractZone" type="Area2D" parent="Helm"]
+position = Vector2(0, 5)
+scale = Vector2(0.84, 0.599883)
+collision_layer = 6
+collision_mask = 6
+
+[node name="PlayerDetector" type="CollisionShape2D" parent="Helm/InteractZone"]
+scale = Vector2(1.35448, -1.9524)
+shape = SubResource("RectangleShape2D_6rk3b")
+
+[node name="Stairs" type="Node2D" parent="."]
+position = Vector2(-27, 39)
+script = ExtResource("8_jrg3c")
+
+[node name="Down" type="Area2D" parent="Stairs"]
+position = Vector2(0, -6)
+collision_layer = 4
+collision_mask = 4
+
+[node name="StairDown" type="CollisionShape2D" parent="Stairs/Down"]
+scale = Vector2(1.32755, 0.0517976)
+shape = SubResource("RectangleShape2D_cjl2f")
+
+[node name="Up" type="Area2D" parent="Stairs"]
+position = Vector2(0, 6)
+collision_layer = 4
+collision_mask = 6
+
+[node name="StairUp" type="CollisionShape2D" parent="Stairs/Up"]
+scale = Vector2(1.32755, 0.0517976)
+shape = SubResource("RectangleShape2D_cjl2f")
+
+[node name="Stairs2" type="Node2D" parent="."]
+position = Vector2(29, 39)
+script = ExtResource("8_jrg3c")
+
+[node name="Down" type="Area2D" parent="Stairs2"]
+position = Vector2(0, -6)
+collision_layer = 4
+collision_mask = 4
+
+[node name="StairDown" type="CollisionShape2D" parent="Stairs2/Down"]
+scale = Vector2(1.32755, 0.0517976)
+shape = SubResource("RectangleShape2D_cjl2f")
+
+[node name="Up" type="Area2D" parent="Stairs2"]
+position = Vector2(0, 6)
+collision_layer = 4
+collision_mask = 6
+
+[node name="StairUp" type="CollisionShape2D" parent="Stairs2/Up"]
+scale = Vector2(1.32755, 0.0517976)
+shape = SubResource("RectangleShape2D_cjl2f")
+
+[connection signal="input_event" from="Anchor" to="Anchor" method="_on_input_event"]
+[connection signal="body_entered" from="Anchor/InteractZone" to="Anchor" method="_on_interact_zone_body_entered"]
+[connection signal="body_exited" from="Anchor/InteractZone" to="Anchor" method="_on_interact_zone_body_exited"]
+[connection signal="input_event" from="Helm" to="Helm" method="_on_input_event"]
+[connection signal="body_entered" from="Helm/InteractZone" to="Helm" method="_on_interact_zone_body_entered"]
+[connection signal="body_exited" from="Helm/InteractZone" to="Helm" method="_on_interact_zone_body_exited"]
+[connection signal="body_entered" from="Stairs/Down" to="Stairs" method="_on_down_body_entered"]
+[connection signal="body_entered" from="Stairs/Up" to="Stairs" method="_on_up_body_entered"]
+[connection signal="body_entered" from="Stairs2/Down" to="Stairs2" method="_on_down_body_entered"]
+[connection signal="body_entered" from="Stairs2/Up" to="Stairs2" method="_on_up_body_entered"]

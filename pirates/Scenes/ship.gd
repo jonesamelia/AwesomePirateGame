@@ -1,7 +1,8 @@
 extends AnimatableBody2D
 
-@onready var wheel = $"../CanvasLayer/HSlider"
+@onready var wheel = $"../CanvasLayer/Wheel/HSlider"
 @onready var dir_display = $"../CanvasLayer/ColorRect/ScrollContainer"
+@onready var animation_player = $"../CanvasLayer/Wheel/AnimationPlayer"
 const speed = 5
 const turn_speed = 0.05
 var steer_rotation = 0
@@ -40,6 +41,11 @@ func get_direction_index(rot: float) -> int:
 
 func _on_h_slider_drag_ended(value_changed: bool) -> void:
 	if wheel.value_changed:
-		var rv = wheel.value - 2
+		var rv = wheel.value - 1
 		steer_rotation = steer_rotation + (rv * deg_to_rad(45))
-		wheel.value = 2
+		wheel.value = 1
+		if rv == 1:
+			animation_player.play("Wheel_spin_clockwise")
+		else:
+			animation_player.play_backwards("Wheel_spin_clockwise")
+			

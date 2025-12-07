@@ -1,0 +1,8 @@
+~ start
+Boots: Hi!! Nice to see you.
+Boots: How is it going?
+- WHA? How are you talking??
+	Boots: Oh... uhh...
+- It's going well! How are you doing?
+	Boots: Splendid! Thanks for asking!
+=> END

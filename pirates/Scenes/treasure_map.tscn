@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://c56hv868iowyg"]
+
+[ext_resource type="Script" uid="uid://wobn1vj6uk7p" path="res://Scripts/treasure_map.gd" id="1_ppjob"]
+[ext_resource type="Texture2D" uid="uid://hoqn7lkiw1fe" path="res://Assets/Sprites/Maps/treasuremapback.png" id="2_j50nh"]
+
+[node name="TreasureMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ppjob")
+
+[node name="mapSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(42, 42)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_j50nh")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_right = 304.0
+offset_bottom = 224.0
+scale = Vector2(0.4, 0.4)
+texture_normal = ExtResource("2_j50nh")
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

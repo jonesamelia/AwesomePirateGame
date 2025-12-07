@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3io08w5ba4r7"]
+
+[ext_resource type="Texture2D" uid="uid://mmoutg4n03pv" path="res://Assets/Sprites/Maps/chest-Sheet.png" id="1_bsmnj"]
+
+[sub_resource type="Animation" id="Animation_yx78l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_bsmnj"]
+resource_name = "open_chest"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_77sd8"]
+_data = {
+&"RESET": SubResource("Animation_yx78l"),
+&"open_chest": SubResource("Animation_bsmnj")
+}
+
+[node name="treasure_chest" type="Node2D"]
+visibility_layer = 7
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_bsmnj")
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_77sd8")
+}

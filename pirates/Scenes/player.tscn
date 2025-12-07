@@ -1,15 +1,22 @@
-[gd_scene load_steps=19 format=3 uid="uid://6deapfga7h36"]
+[gd_scene load_steps=30 format=3 uid="uid://6deapfga7h36"]
 
 [ext_resource type="Script" uid="uid://dtnup77x37mgg" path="res://Scripts/player.gd" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://j2ydvxju2h2w" path="res://Assets/Sprites/player/betterbody.png" id="2_x3wgy"]
 [ext_resource type="Texture2D" uid="uid://bgn837qmt0hxp" path="res://Assets/Sprites/player/betterpants.png" id="3_3smsa"]
+[ext_resource type="AudioStream" uid="uid://bpu4kmu5w7o36" path="res://Assets/Sound/footsteps.wav" id="5_7dp3o"]
 [ext_resource type="Texture2D" uid="uid://bqs7ees0hv5pj" path="res://Assets/Sprites/player/betterhair.png" id="5_f1ek2"]
 [ext_resource type="Texture2D" uid="uid://sisw6maqqn8a" path="res://Assets/Sprites/player/bettershirt.png" id="5_x3wgy"]
 [ext_resource type="Texture2D" uid="uid://cnhol0u7xpuih" path="res://Assets/Sprites/player/betterboots.png" id="6_tx1dd"]
+[ext_resource type="FontFile" uid="uid://crsaotowrws0g" path="res://Assets/Fonts/BOOTERFF.ttf" id="7_3smsa"]
+[ext_resource type="PackedScene" uid="uid://dcw0qp4q440sk" path="res://Scenes/inventory_ui.tscn" id="8_8erm5"]
+[ext_resource type="PackedScene" uid="uid://c56hv868iowyg" path="res://Scenes/treasure_map.tscn" id="9_f1ek2"]
+[ext_resource type="Texture2D" uid="uid://hoqn7lkiw1fe" path="res://Assets/Sprites/Maps/treasuremapback.png" id="9_tx1dd"]
+[ext_resource type="Texture2D" uid="uid://djutc5soov7nh" path="res://Assets/Sprites/Milky 14 - 128x128.png" id="10_ukyrk"]
+[ext_resource type="PackedScene" uid="uid://b6xacgyud4bbs" path="res://Scenes/map_list_ui.tscn" id="11_gymyn"]
+[ext_resource type="Script" uid="uid://b07v8a4l8stxr" path="res://Scripts/map_list_ui.gd" id="12_pu2lt"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x3wgy"]
-radius = 8.0
-height = 32.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3smsa"]
+size = Vector2(17, 15)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3wgy"]
 atlas = ExtResource("2_x3wgy")
@@ -144,6 +151,70 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7dp3o"]
+resource_name = "idle_left"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton/Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [27]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton/Hair:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [27]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Skeleton/Pants:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [27]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Skeleton/Shirt:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [27]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Skeleton/Shoes:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [27]
 }
 
 [sub_resource type="Animation" id="Animation_tx1dd"]
@@ -540,6 +611,7 @@ tracks/4/keys = {
 _data = {
 &"RESET": SubResource("Animation_8erm5"),
 &"idle_down": SubResource("Animation_3smsa"),
+&"idle_left": SubResource("Animation_7dp3o"),
 &"idle_right": SubResource("Animation_tx1dd"),
 &"idle_up": SubResource("Animation_f1ek2"),
 &"walk_down": SubResource("Animation_gymyn"),
@@ -548,14 +620,29 @@ _data = {
 &"walk_up": SubResource("Animation_x3wgy")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3wgy"]
+size = Vector2(48, 64)
+
+[sub_resource type="Theme" id="Theme_f1ek2"]
+default_font = ExtResource("7_3smsa")
+default_font_size = 30
+
+[node name="Player" type="CharacterBody2D" groups=["Persist", "Player"]]
+process_mode = 3
+light_mask = 4
+visibility_layer = 4
+z_index = 1
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_v0iea")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 8)
-shape = SubResource("CapsuleShape2D_x3wgy")
+position = Vector2(-0.5, 16.5)
+shape = SubResource("RectangleShape2D_3smsa")
 
 [node name="Skeleton" type="Node2D" parent="."]
+light_mask = 4
+visibility_layer = 4
 
 [node name="Body" type="Sprite2D" parent="Skeleton"]
 texture_filter = 1
@@ -574,6 +661,10 @@ texture_filter = 1
 texture = SubResource("AtlasTexture_3smsa")
 hframes = 9
 vframes = 4
+
+[node name="FootstepSounds" type="AudioStreamPlayer2D" parent="Skeleton/Shoes"]
+stream = ExtResource("5_7dp3o")
+volume_db = -6.6
 
 [node name="Shirt" type="Sprite2D" parent="Skeleton"]
 texture_filter = 1
@@ -600,3 +691,248 @@ libraries = {
 ignore_rotation = false
 zoom = Vector2(2.5, 2.5)
 position_smoothing_enabled = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+
+[node name="InteractArea" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 7.5)
+shape = SubResource("RectangleShape2D_x3wgy")
+
+[node name="InteractUI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="InteractUI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -302.0
+offset_top = -55.0
+offset_right = -2.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0, 0.738364, 0.741489, 1)
+
+[node name="Label" type="Label" parent="InteractUI/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -11.5
+offset_right = 71.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_3smsa")
+theme_override_font_sizes/font_size = 40
+text = "Press 'E' to pick up"
+horizontal_alignment = 1
+
+[node name="InventoryUI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="InventoryUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -225.0
+offset_right = 544.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.863445, 1)
+color = Color(0.425328, 0.20559, 0.02364, 1)
+
+[node name="Label" type="Label" parent="InventoryUI/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
+offset_right = 37.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme = SubResource("Theme_f1ek2")
+theme_override_font_sizes/font_size = 30
+text = "Inventory"
+
+[node name="Button" type="Button" parent="InventoryUI/ColorRect"]
+layout_mode = 0
+offset_left = 691.416
+offset_top = 3.0
+offset_right = 741.416
+offset_bottom = 34.0
+action_mode = 0
+text = "Maps"
+
+[node name="doubloons" type="Label" parent="InventoryUI/ColorRect"]
+layout_mode = 0
+offset_left = 166.774
+offset_top = 14.0
+offset_right = 206.774
+offset_bottom = 63.0
+text = "0
+"
+
+[node name="Inventory_UI" parent="InventoryUI" instance=ExtResource("8_8erm5")]
+offset_left = 400.0
+offset_top = 200.0
+offset_right = -52.0
+offset_bottom = -48.0
+
+[node name="Character_Window" type="ColorRect" parent="InventoryUI"]
+offset_left = 137.0
+offset_top = 168.0
+offset_right = 207.0
+offset_bottom = 238.0
+scale = Vector2(2.6, 4.6)
+
+[node name="Skeleton" type="Node2D" parent="InventoryUI/Character_Window"]
+light_mask = 4
+visibility_layer = 4
+position = Vector2(35, 28.0435)
+scale = Vector2(1.92308, 1.08696)
+
+[node name="Body" type="Sprite2D" parent="InventoryUI/Character_Window/Skeleton"]
+texture_filter = 1
+texture = SubResource("AtlasTexture_x3wgy")
+hframes = 9
+vframes = 4
+
+[node name="Pants" type="Sprite2D" parent="InventoryUI/Character_Window/Skeleton"]
+texture_filter = 1
+texture = ExtResource("3_3smsa")
+hframes = 9
+vframes = 4
+
+[node name="Shoes" type="Sprite2D" parent="InventoryUI/Character_Window/Skeleton"]
+texture_filter = 1
+texture = SubResource("AtlasTexture_3smsa")
+hframes = 9
+vframes = 4
+
+[node name="Shirt" type="Sprite2D" parent="InventoryUI/Character_Window/Skeleton"]
+texture_filter = 1
+texture = ExtResource("5_x3wgy")
+hframes = 9
+vframes = 4
+
+[node name="Hair" type="Sprite2D" parent="InventoryUI/Character_Window/Skeleton"]
+texture_filter = 1
+texture = ExtResource("5_f1ek2")
+hframes = 9
+vframes = 4
+
+[node name="Name" type="Label" parent="InventoryUI/Character_Window/Skeleton"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="TreasureMapUI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="TreasureMapUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -225.0
+offset_right = 400.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.159)
+color = Color(0.425328, 0.20559, 0.02364, 1)
+
+[node name="Label" type="Label" parent="TreasureMapUI/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
+offset_right = 37.5
+offset_bottom = 65.0
+grow_horizontal = 2
+theme = SubResource("Theme_f1ek2")
+theme_override_font_sizes/font_size = 30
+text = "Maps
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="TreasureMapUI/ColorRect"]
+layout_mode = 0
+offset_left = 691.416
+offset_top = 3.0
+offset_right = 741.416
+offset_bottom = 34.0
+text = "Inventory"
+
+[node name="TreasureMap" parent="TreasureMapUI" instance=ExtResource("9_f1ek2")]
+visible = false
+
+[node name="MapList_UI" parent="TreasureMapUI" instance=ExtResource("11_gymyn")]
+offset_left = 228.0
+offset_top = 177.0
+offset_right = -224.0
+offset_bottom = -71.0
+script = ExtResource("12_pu2lt")
+
+[node name="OpenMap" type="Control" parent="TreasureMapUI"]
+visible = false
+custom_minimum_size = Vector2(600, 300)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -138.075
+offset_right = 300.0
+offset_bottom = 161.925
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="background" type="Sprite2D" parent="TreasureMapUI/OpenMap"]
+position = Vector2(300, 150)
+scale = Vector2(1.7, 1.4)
+texture = ExtResource("9_tx1dd")
+
+[node name="map_text" type="Label" parent="TreasureMapUI/OpenMap"]
+layout_mode = 0
+offset_left = 118.891
+offset_top = 71.0
+offset_right = 472.891
+offset_bottom = 143.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_3smsa")
+theme_override_font_sizes/font_size = 21
+text = "Right beside the standing boots... 
+is where you'll find
+the waiting loots."
+uppercase = true
+
+[node name="map_image" type="Sprite2D" parent="TreasureMapUI/OpenMap"]
+position = Vector2(300, 140.703)
+scale = Vector2(2.82628, 1.37964)
+texture = ExtResource("10_ukyrk")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="pressed" from="InventoryUI/ColorRect/Button" to="InventoryUI/Inventory_UI" method="_on_button_pressed"]
+[connection signal="pressed" from="TreasureMapUI/ColorRect/Button" to="TreasureMapUI/MapList_UI" method="_on_button_pressed"]

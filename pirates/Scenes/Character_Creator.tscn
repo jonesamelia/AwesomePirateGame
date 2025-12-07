@@ -81,14 +81,16 @@ color = Color(0.356563, 0.168458, 0.00813528, 1)
 
 [node name="Details" type="ColorRect" parent="CreatorScreen/ColorRect"]
 layout_mode = 0
-offset_right = 730.0
+offset_left = 7.0
+offset_right = 737.0
 offset_bottom = 50.0
 color = Color(1, 1, 1, 0)
 
 [node name="Label" type="Label" parent="CreatorScreen/ColorRect/Details"]
 layout_mode = 0
+offset_top = 2.0
 offset_right = 144.0
-offset_bottom = 42.0
+offset_bottom = 44.0
 theme_override_font_sizes/font_size = 20
 text = "NAME"
 
@@ -111,9 +113,9 @@ placeholder_text = "Name
 [node name="Body" type="ColorRect" parent="CreatorScreen/ColorRect"]
 layout_mode = 0
 offset_left = 7.0
-offset_top = 64.0
+offset_top = 104.0
 offset_right = 357.0
-offset_bottom = 114.0
+offset_bottom = 154.0
 color = Color(1, 1, 1, 0)
 
 [node name="Label" type="Label" parent="CreatorScreen/ColorRect/Body"]
@@ -154,9 +156,9 @@ text = "<
 [node name="Hair" type="ColorRect" parent="CreatorScreen/ColorRect"]
 layout_mode = 0
 offset_left = 7.0
-offset_top = 240.0
+offset_top = 235.0
 offset_right = 357.0
-offset_bottom = 350.0
+offset_bottom = 345.0
 color = Color(1, 1, 1, 0)
 
 [node name="Label" type="Label" parent="CreatorScreen/ColorRect/Hair"]
